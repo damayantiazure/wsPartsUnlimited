@@ -165,14 +165,15 @@ stages:
                   packageForLinux: '$(Pipeline.Workspace)/**/*.zip'    
                   #packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'                        
 
+
 - stage: DeployToProd
   displayName: Deploy to Production
   jobs:
   - deployment: DeployToProd
-    displayName: Deploy To Prod Environment
-  pool:
-    name: Hosted VS2017        
-  environment: 'PUL-Production'
+    displayName: Deploy To Production Environment
+    pool:
+      name: Hosted VS2017
+    environment: 'PUL-production'
     strategy:
         runOnce:
            deploy:
@@ -182,11 +183,9 @@ stages:
                   ConnectionType: 'AzureRM'
                   azureSubscription: 'ES-CE-LR-INT REQUESTORALIAS (6a92d24c-701c-4ec5-8af0-7981e6537707)'
                   appType: 'webApp'
-                  WebAppName: '$(WebsiteName)'
-                  deployToSlotOrASE: true
-                  ResourceGroupName: 'PartsUnlimitedRG'
-                  SlotName: 'Staging'
+                  WebAppName: '$(WebsiteName)'                  
                   packageForLinux: '$(Pipeline.Workspace)/**/*.zip'    
-                  #packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'                    
+                  #packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'                                     
+
   
   
