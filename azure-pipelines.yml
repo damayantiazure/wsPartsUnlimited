@@ -28,11 +28,15 @@ stages:
       # HostingPlan: 'pule2e'
 
     steps:
-    - task: NuGetToolInstaller@1
+    # - task: NuGetToolInstaller@1
 
-    - task: NuGetCommand@2
+    # - task: NuGetCommand@2
+    #   inputs:
+    #     restoreSolution: '$(solution)'
+    - task: NuGetInstaller@0
+      displayName: 'NuGet restore'
       inputs:
-        restoreSolution: '$(solution)'
+        solution: '**\*.sln'    
 
     # - task: VSBuild@1
     #   inputs:
@@ -52,11 +56,12 @@ stages:
     #     platform: '$(BuildPlatform)'
     #     configuration: '$(BuildConfiguration)'
     - task: VSBuild@1
+      displayName: 'Build solution'
       inputs:
-        solution: '$(solution)'
-        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
+        vsVersion: 15.0
+        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
+        platform: '$(BuildPlatform)'
+        configuration: '$(BuildConfiguration)'
 
     - task: VSTest@2
       inputs:
