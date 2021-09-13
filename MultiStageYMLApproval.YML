@@ -87,8 +87,10 @@ stages:
       packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'    
 
 - stage : DeployAzureResources
+  displayName: Deploy Azure Resources
   jobs: 
   - job: DeployARMTemplate
+    displayName: Deploy ARM Template
     pool:
       name: Hosted VS2017
     steps:        
@@ -117,6 +119,14 @@ stages:
         #   $(PUL_ServerName) -PUL_DBPassword $(PUL_DBPassword) -PUL_DBPasswordForTest
         #   $(PUL_DBPasswordForTest) -PUL_HostingPlanName $(PUL_HostingPlanName)
         deploymentMode: 'Incremental'
+        
+- stage: DeployToDevAndStaging
+  displayName: Deploy to Dev and Staging Environments
+  jobs:
+  - deployment: DeployToDev
+    displayName: Deploy To Dev Environment
+    pool:
+      name: Hosted VS2017
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
@@ -124,6 +134,14 @@ stages:
         appType: 'webApp'
         WebAppName: '$(WebsiteName)'
         packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'    
+
+- stage: DeployToProd
+  displayName: Deploy to Production
+  jobs:
+  - deployment: DeployToProd
+    displayName: Deploy To Prod Environment
+  pool:
+    name: Hosted VS2017        
 
 
         
