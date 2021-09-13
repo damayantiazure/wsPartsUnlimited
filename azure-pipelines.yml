@@ -43,7 +43,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Files'
   inputs:
-    SourceFolder: '**\$(build.sourcesdirectory)/PartsUnlimited-aspnet45/env/'
+    SourceFolder: '$(build.sourcesdirectory)'
     Contents: '**/*.json'
     TargetFolder: '$(build.artifactstagingdirectory)'    
 - task: PublishPipelineArtifact@1
