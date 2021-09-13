@@ -37,12 +37,17 @@ stages:
       displayName: 'NuGet restore'
       inputs:
         solution: '**\*.sln'    
+    - task: VSBuild@1
+      inputs:
+        solution: '**\*.sln'
+        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true''
+        
 
     # - task: VSBuild@1
     #   inputs:
     #     solution: '$(solution)'
     #     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    #     platform: '$(buildPlatform)'
+    #     platform: '$
     #     configuration: '$(buildConfiguration)'
     # - task: VSBuild@1
     #   inputs:
@@ -55,13 +60,13 @@ stages:
     #     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
     #     platform: '$(BuildPlatform)'
     #     configuration: '$(BuildConfiguration)'
-    - task: VSBuild@1
-      displayName: 'Build solution'
-      inputs:
-        vsVersion: 15.0
-        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
-        platform: '$(BuildPlatform)'
-        configuration: '$(BuildConfiguration)'
+    # - task: VSBuild@1
+    #   displayName: 'Build solution'
+    #   inputs:
+    #     vsVersion: 15.0
+    #     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
+    #     platform: '$(BuildPlatform)'
+    #     configuration: '$(BuildConfiguration)'
 
     - task: VSTest@2
       inputs:
