@@ -88,7 +88,7 @@ stages:
         overrideParameters: |
           -WebsiteName $(WebsiteName) -PUL_ServerName
           $(PUL_ServerName) -PUL_DBPassword $(PUL_DBPassword) -PUL_DBPasswordForTest
-          $(PUL_DBPasswordForTest) -PUL_HostingPlanName $(HostingPlan)
+          $(PUL_DBPasswordForTest) -PUL_HostingPlanName $(PUL_HostingPlanName)
         deploymentMode: 'Incremental'
 #   variables:
 #   ResourceGroupName: 'ASPDOTNET'
