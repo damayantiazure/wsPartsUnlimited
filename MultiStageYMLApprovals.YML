@@ -5,6 +5,8 @@
 
 trigger: none
 #- master
+variables:
+  - group: dev.variables
 
 stages:
 - stage: Build
@@ -16,8 +18,8 @@ stages:
       - msbuild
       - visualstudio
       - vstest
-    variables:
-    - group: dev.variables
+    # variables:
+    # - group: dev.variables
       # solution: '**/*.sln'
       # buildPlatform: 'Any CPU'
       # buildConfiguration: 'Release' 
