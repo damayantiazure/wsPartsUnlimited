@@ -17,7 +17,8 @@ stages:
       - visualstudio
       - vstest
     variables:
-    - group: dev.variables    
+    - group: dev.variables
+    
     steps: 
     - task: NuGetInstaller@0
       displayName: 'NuGet restore'
@@ -49,8 +50,9 @@ stages:
   jobs:
   - job: DeployARMTemplate        
   pool:
-      name: Hosted VS2017
-  steps:        
+      name: Hosted VS2017  
+
+steps:        
   - task: DownloadPipelineArtifact@2
     displayName: Download Build Artifacts
     inputs:
