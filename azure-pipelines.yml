@@ -87,8 +87,8 @@ stages:
         csmParametersFile: '$(System.ArtifactsDirectory)/**/FullEnvironmentSetupMerged.param.json'
         overrideParameters: |
           -WebsiteName $(WebsiteName) -PUL_ServerName
-          $(ServerName) -PUL_DBPassword $(AdminPassword) -PUL_DBPasswordForTest
-          $(AdminTestPassword) -PUL_HostingPlanName $(HostingPlan)
+          $(PUL_ServerName) -PUL_DBPassword $(PUL_DBPassword) -PUL_DBPasswordForTest
+          $(PUL_DBPasswordForTest) -PUL_HostingPlanName $(HostingPlan)
         deploymentMode: 'Incremental'
 #   variables:
 #   ResourceGroupName: 'ASPDOTNET'
