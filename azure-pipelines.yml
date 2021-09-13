@@ -32,8 +32,8 @@ steps:
 #     platform: '$(buildPlatform)'
 #     configuration: '$(buildConfiguration)'
 - task: VSBuild@1
-    inputs:
-      solution: '**/*.csproj'
+  inputs:
+    solution: '**/*.csproj'
     enabled: true
 
 - task: VSTest@2
