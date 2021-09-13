@@ -61,28 +61,28 @@ stages:
   - job: Deploy
     pool:
       name: Hosted VS2017
-      steps:
+    steps:
         
-      - task: DownloadPipelineArtifact@2
-        displayName: Download Build Artifacts
-        inputs:
-          buildType: 'current'
-          artifactName: 'drop'
-          targetPath: '$(System.ArtifactsDirectory)'
-      - task: AzureResourceManagerTemplateDeployment@3
-        displayName: Deploy Resource Group 
-        inputs:
-          deploymentScope: 'Resource Group'
-          azureResourceManagerConnection: 'ES-CE-LR-INT REQUESTORALIAS (6a92d24c-701c-4ec5-8af0-7981e6537707)'
-          subscriptionId: '6a92d24c-701c-4ec5-8af0-7981e6537707'
-          action: 'Create Or Update Resource Group'
-          resourceGroupName: '$(RgName)'
-          location: 'East US'
-          templateLocation: 'Linked artifact'
-          csmFile: '$(System.ArtifactsDirectory)/**/FullEnvironmentSetupMerged.json'
-          csmParametersFile: '$(System.ArtifactsDirectory)/**/FullEnvironmentSetupMerged.param.json'
-          overrideParameters: |
-            WebsiteName $(WebsiteName) -PUL_ServerName
-            $(ServerName) -PUL_DBPassword $(AdminPassword) -PUL_DBPasswordForTest
-            $(AdminTestPassword) -PUL_HostingPlanName $(HostingPlan)
-          deploymentMode: 'Incremental'
+    - task: DownloadPipelineArtifact@2
+      displayName: Download Build Artifacts
+      inputs:
+        buildType: 'current'
+        artifactName: 'drop'
+        targetPath: '$(System.ArtifactsDirectory)'
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: Deploy Resource Group 
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'ES-CE-LR-INT REQUESTORALIAS (6a92d24c-701c-4ec5-8af0-7981e6537707)'
+        subscriptionId: '6a92d24c-701c-4ec5-8af0-7981e6537707'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(RgName)'
+        location: 'East US'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(System.ArtifactsDirectory)/**/FullEnvironmentSetupMerged.json'
+        csmParametersFile: '$(System.ArtifactsDirectory)/**/FullEnvironmentSetupMerged.param.json'
+        overrideParameters: |
+          WebsiteName $(WebsiteName) -PUL_ServerName
+          $(ServerName) -PUL_DBPassword $(AdminPassword) -PUL_DBPasswordForTest
+          $(AdminTestPassword) -PUL_HostingPlanName $(HostingPlan)
+        deploymentMode: 'Incremental'
