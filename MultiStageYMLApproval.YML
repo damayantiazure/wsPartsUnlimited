@@ -17,9 +17,10 @@ stages:
       - visualstudio
       - vstest
     variables:
-      solution: '**/*.sln'
-      buildPlatform: 'Any CPU'
-      buildConfiguration: 'Release' 
+    - group: dev.variables
+      # solution: '**/*.sln'
+      # buildPlatform: 'Any CPU'
+      # buildConfiguration: 'Release' 
     steps: 
     - task: NuGetInstaller@0
       displayName: 'NuGet restore'
