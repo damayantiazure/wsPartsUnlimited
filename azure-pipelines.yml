@@ -12,7 +12,7 @@ stages:
   - job: Build
 
     pool:
-      vmImage: 'ubuntu-20.04'
+      vmImage: 'vs2017-win2016'
       demands:
       - msbuild
       - visualstudio
@@ -21,54 +21,22 @@ stages:
     variables:
       solution: '**/*.sln'
       buildPlatform: 'Any CPU'
-      buildConfiguration: 'Release'
-      # ResourceGroupName: 'PartsUnlimitedRG'
-      # WebsiteName: 'pule2e0da0d460'
-      # ServerName: 'pule2e0da0d460'
-      # HostingPlan: 'pule2e'
+      buildConfiguration: 'Release' 
 
     steps:
-    # - task: NuGetToolInstaller@1
-
-    # - task: NuGetCommand@2
-    #   inputs:
-    #     restoreSolution: '$(solution)'
+ 
     - task: NuGetInstaller@0
       displayName: 'NuGet restore'
       inputs:
-        solution: '**\*.sln'    
-    
-    
-
-    # - task: VSBuild@1
-    #   inputs:
-    #     solution: '$(solution)'
-    #     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    #     platform: '$
-    #     configuration: '$(buildConfiguration)'
-    # - task: VSBuild@1
-    #   inputs:
-    #     solution: '**/*.csproj'
-    #     enabled: true
-    # - task: VSBuild@1
-    #   displayName: 'Build solution'
-    #   inputs:
-    #     vsVersion: latest
-    #     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
-    #     platform: '$(BuildPlatform)'
-    #     configuration: '$(BuildConfiguration)'
-    # - task: VSBuild@1
-    #   displayName: 'Build solution'
-    #   inputs:
-    #     vsVersion: 15.0
-    #     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
-    #     platform: '$(BuildPlatform)'
-    #     configuration: '$(BuildConfiguration)'
+        solution: '**\*.sln'          
     - task: VSBuild@1
+      displayName: 'Build solution'
       inputs:
-        solution: '**\*.sln'
-        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)"'
-
+        vsVersion: 15.0
+        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
+        platform: '$(BuildPlatform)'
+        configuration: '$(BuildConfiguration)'    
+      
     - task: VSTest@2
       inputs:
         platform: '$(buildPlatform)'
