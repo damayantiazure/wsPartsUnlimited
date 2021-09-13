@@ -12,7 +12,7 @@ stages:
   - job: Build
 
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'ubuntu-20.04'
       demands:
       - msbuild
       - visualstudio
