@@ -7,7 +7,7 @@ parameters:
   - 'debug'
   - 'release'
 
-- name: preBuildStates
+- name: preBuildSteps
   displayName: Pre Build States
   type: stepList
   default: []
@@ -17,5 +17,5 @@ jobs:
   pool: 
     vmImage: 'ubuntu-latest'
   steps:
-  - ${{ parameters:preBuildStates }}  
-  - bash: echo "Build with ${{ parameters:preBuildStates }}"
+  - ${{ parameters:preBuildSteps }}  
+  - bash: echo "Build with ${{ parameters:buildConfigurations }}"
