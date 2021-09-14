@@ -17,7 +17,7 @@ stages:
   condition: succeeded
   jobs:
   - deployment: 
-    displayName: Deploy ${{ parameters:workloadName }} 
+    displayName: Deploy ${{ parameters.workloadName }} 
     pool:
       name: ubuntu-latest 
     environment: 'production'
