@@ -17,7 +17,7 @@ stages:
   condition: succeeded
   jobs:
   - deployment: 
-    displayName: Deploy ${{parameters:workloadName}} 
+    displayName: Deploy ${{ parameters:workloadName }} 
     pool:
       name: ubuntu-latest 
     environment: 'production'
@@ -25,5 +25,5 @@ stages:
         runOnce:
            deploy:
                steps:
-               - bash: echo "Deploy to ${{parameters:workloadName}} to production"
+               - bash: echo "Deploy to ${{ parameters:workloadName }} to production"
   
