@@ -14,7 +14,7 @@ stages:
   jobs:
   - template: /pipelines/job_templates/build.yml
     parameters: 
-      preBuildStates: []
+      preBuildSteps: []
       buildConfigurations: 'release'
 
 - template: /pipelines/stage_templates/deplyworkload.yml  
