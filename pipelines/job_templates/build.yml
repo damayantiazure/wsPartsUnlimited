@@ -15,7 +15,7 @@ parameters:
 jobs:
 - job: run_build
   pool: 
-    vmImage: 'ubuntu-latest'
+    vmImage: Hosted VS2017
   steps:
   - ${{ parameters.preBuildSteps }}  
   - bash: echo "Build with ${{ parameters.buildConfigurations }}"
