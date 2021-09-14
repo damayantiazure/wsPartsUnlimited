@@ -1,0 +1,29 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+
+parameters:
+  - name: workloadName
+    displayName: Target Workload Name 
+    type: string
+    default: 'workload-prod-fa'
+
+stages:
+- stage: Deploy Workload 
+  displayName: Deploy to Dev and Staging Environments
+  dependsOn: build
+  condition: succeeded
+  jobs:
+  - deployment: 
+    displayName: Deploy ${{parameters:workloadName}} 
+    pool:
+      name: ubuntu-latest 
+    environment: 'production'
+    strategy:
+        runOnce:
+           deploy:
+               steps:
+               - bash: echo "Deploy to ${{parameters:workloadName}} to production"
+  
