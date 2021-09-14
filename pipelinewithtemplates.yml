@@ -26,7 +26,7 @@ stages:
   jobs:
   - job: deploy_staging   
     pool: 
-      vmImage: 'ubuntu-latest'
+      vmImage: ubuntu-latest
     steps:
     - script: echo "Configure"  
 
