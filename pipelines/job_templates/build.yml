@@ -9,13 +9,13 @@ parameters:
 
 - name: preBuildStates
   displayName: Pre Build States
-  type: steplist
+  type: stepList
   default: []
 
 jobs:
 - job: run_build
-pool: 
-  vmImage: 'ubuntu-latest'
-steps:
-- ${{ parameters:preBuildStates }}  
-- bash: echo "Build with ${{ parameters:preBuildStates }}"
+  pool: 
+    vmImage: 'ubuntu-latest'
+  steps:
+  - ${{ parameters:preBuildStates }}  
+  - bash: echo "Build with ${{ parameters:preBuildStates }}"
