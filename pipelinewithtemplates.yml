@@ -23,11 +23,11 @@ stages:
 - stage: configure
   dependson: deploy
   jobs:
-  -job: deploy_staging   
-   pool:
-     vmImage: 'ubintu-latest'
-   steps:
-   - script: echo "Configure"  
+  - job: deploy_staging   
+    pool:
+      vmImage: 'ubintu-latest'
+    steps:
+    - script: echo "Configure"  
 
 
   
