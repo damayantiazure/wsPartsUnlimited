@@ -22,7 +22,7 @@ stages:
     workloadName: 'workload-prod-fa'
 
 - stage: configure
-  dependson: Deploy
+  dependsOn: Deploy
   jobs:
   - job: deploy_staging   
     pool:
