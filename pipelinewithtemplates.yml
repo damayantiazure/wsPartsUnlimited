@@ -17,7 +17,7 @@ stages:
       preBuildSteps: []
       buildConfigurations: 'release'
 
-- template: /pipelines/stage_templates/deplyworkload.yml  
+- template: /pipelines/stage_templates/deployworkload.yml  
   parameters:
     workloadName: 'workload-prod-fa'
 
