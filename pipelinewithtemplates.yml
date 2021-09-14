@@ -1,11 +1,11 @@
-trigger:
-  batch: true
-  branches:
-    include: 
-      - 'master'
-  paths:
-    exclude:
-      - README.md  
+trigger: none
+  # batch: true
+  # branches:
+  #   include: 
+  #     - 'master'
+  # paths:
+  #   exclude:
+  #     - README.md  
 name: workloadName_$(BuildDefinitionName)_$(Build.SourceBranchName)_$(Date:yyyyMMdd).$(Rev:rr)      
 
 stages:
