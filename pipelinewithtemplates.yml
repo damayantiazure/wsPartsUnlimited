@@ -26,7 +26,7 @@ stages:
   jobs:
   - job: deploy_staging   
     pool: 
-      vmImage: Hosted VS2017
+      name: Hosted VS2017
     steps:
     - script: echo "Configure"  
 
