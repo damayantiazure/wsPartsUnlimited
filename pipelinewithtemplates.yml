@@ -5,6 +5,7 @@ trigger:
   paths:
     exclude:
       - README.md  
+name: workloadName_$(BuildDefinitionName)_$(Build.SourceBranchName)_$(Date:yyyyMMdd).$(Rev:rr)      
 
 stages:
 - stage: build
