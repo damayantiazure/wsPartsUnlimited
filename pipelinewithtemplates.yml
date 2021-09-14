@@ -25,7 +25,7 @@ stages:
   #dependsOn: Deploy
   jobs:
   - job: deploy_staging   
-    pool:
+    pool: 
       vmImage: 'ubuntu-latest'
     steps:
     - script: echo "Configure"  
