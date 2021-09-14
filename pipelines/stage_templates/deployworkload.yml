@@ -19,7 +19,7 @@ stages:
   - deployment: 
     displayName: Deploy ${{ parameters.workloadName }} 
     pool:
-      name: ubuntu-latest 
+      name: Hosted VS2017 
     environment: 'production'
     strategy:
         runOnce:
