@@ -25,5 +25,5 @@ stages:
         runOnce:
            deploy:
                steps:
-               - bash: echo "Deploy to ${{ parameters:workloadName }} to production"
+               - bash: echo "Deploy to ${{ parameters.workloadName }} to production"
   
