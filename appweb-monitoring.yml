@@ -1,0 +1,95 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger: none
+#- master
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'vs2017-win2016'
+      demands:
+      - msbuild
+      - visualstudio
+      - vstest
+    variables:
+      solution: '**/*.sln'
+      buildPlatform: 'Any CPU'
+      buildConfiguration: 'Release' 
+    steps: 
+    - task: NuGetInstaller@0
+      displayName: 'NuGet restore'
+      inputs:
+        solution: '**\*.sln'          
+    - task: VSBuild@1
+      displayName: 'Build solution'
+      inputs:
+        vsVersion: 15.0
+        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
+        platform: '$(BuildPlatform)'
+        configuration: '$(BuildConfiguration)'          
+    - task: VSTest@2
+      inputs:
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+    - task: CopyFiles@2
+      displayName: 'Copy Files'
+      inputs:
+        SourceFolder: '$(build.sourcesdirectory)'
+        Contents: '**/*.json'
+        TargetFolder: '$(build.artifactstagingdirectory)'    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(build.artifactstagingdirectory)'
+        artifact: 'drop'
+        publishLocation: 'pipeline'
+- stage: Deploy
+  jobs:
+  - job: Deploy
+    pool:
+      name: Hosted VS2017
+    steps:        
+    - task: DownloadPipelineArtifact@2
+      displayName: Download Build Artifacts
+      inputs:
+        buildType: 'current'
+        artifactName: 'drop'
+        targetPath: '$(System.ArtifactsDirectory)'
+
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: Deploy Resource Group 
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'ES-CE-LR-INT REQUESTORALIAS (6a92d24c-701c-4ec5-8af0-7981e6537707)'
+        subscriptionId: '6a92d24c-701c-4ec5-8af0-7981e6537707'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(RgName)'
+        location: 'East US'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(System.ArtifactsDirectory)/**/FullEnvironmentSetupMerged.json'
+        csmParametersFile: '$(System.ArtifactsDirectory)/**/FullEnvironmentSetupMerged.param.json'
+        overrideParameters: '-WebsiteName $(WebsiteName) -PUL_ServerName $(PUL_ServerName) -PUL_DBPassword $(PUL_DBPassword) -PUL_DBPasswordForTest $(PUL_DBPasswordForTest) -PUL_HostingPlanName $(PUL_HostingPlanName)' 
+        # overrideParameters: |
+        #   -WebsiteName $(WebsiteName) -PUL_ServerName
+        #   $(PUL_ServerName) -PUL_DBPassword $(PUL_DBPassword) -PUL_DBPasswordForTest
+        #   $(PUL_DBPasswordForTest) -PUL_HostingPlanName $(PUL_HostingPlanName)
+        deploymentMode: 'Incremental'
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'ES-CE-LR-INT REQUESTORALIAS (6a92d24c-701c-4ec5-8af0-7981e6537707)'
+        appType: 'webApp'
+        WebAppName: '$(WebsiteName)'
+        packageForLinux: '$(System.ArtifactsDirectory)/**/*.zip'    
+
+
+        
+        
+
+
+
+
