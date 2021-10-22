@@ -20,7 +20,7 @@ For full deployments, you can deploy the PartsUnlimited app to slots as needed. 
 1.	For Deployment template, choose demoenvironmentsetup.json.
 1.	For Deployment template parameters, choose demoenvironmentsetup.param.json.
 1.	Click Deploy.
-1.	If prompted, edit the parameter to add any required value for the deployment template.
+1.	If prompted, edit the parameter to add any required value for the deployment template..
     * Do not fill in values for anything that has ‘auto-generated’ for its value.
 1.	If prompted fill in any values the scripts ask for.  This will only happen if you leave a non-auto-generated parameter blank.
     * The WebsiteName must be globally unique and have only letters and numbers
