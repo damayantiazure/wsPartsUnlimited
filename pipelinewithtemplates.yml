@@ -7,7 +7,7 @@ trigger: none
   #   exclude:
   #     - README.md  
 name: workloadName_$(BuildDefinitionName)_$(Build.SourceBranchName)_$(Date:yyyyMMdd).$(Rev:rr)      
-
+#Stages
 stages:
 - stage: build
 
