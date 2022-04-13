@@ -32,6 +32,15 @@ stages:
         msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
         platform: '$(BuildPlatform)'
         configuration: '$(BuildConfiguration)'          
+    - task: RedgateSqlChangeAutomationBuild@4
+      inputs:
+        operation: 'Build SQL Change Automation Project'
+        sqlProj: 'PartsUnlimited-aspnet45/PartsLimitedDatabase/PartsLimitedDatabase.sqlproj'
+        packageName: 'PartsLimitedDatabase'
+        tempServerTypeBuild: 'localDB'
+        nugetPackageVersionSelector: 'Specific'
+        nugetPackageVersion: '1.0'
+        requiredVersionOfDlma: 'latest'
     - task: VSTest@2
       inputs:
         platform: '$(buildPlatform)'
